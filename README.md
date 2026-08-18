@@ -18,6 +18,13 @@ into, fill your details once, and every application across all nine platforms
 generates itself with copy buttons. Missing fields show as highlighted gaps so
 you can't paste a hole by accident. Works offline; saves to your browser.
 
+Each card also has an **operator prompt** for the
+[Claude in Chrome](https://chromewebstore.google.com/search/claude) extension —
+copy it into the side panel and it fills the actual form in your logged-in
+session, field by field. Run it in Manual approval mode and review before it
+submits: campaign briefs are third-party text on the page, which is exactly the
+surface prompt injection targets, and the prompt tells it as much.
+
 The command-line flow below does the same thing, plus follow-up tracking.
 
 ```bash
