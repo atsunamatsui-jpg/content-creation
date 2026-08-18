@@ -18,16 +18,25 @@ into, fill your details once, and every application across all nine platforms
 generates itself with copy buttons. Missing fields show as highlighted gaps so
 you can't paste a hole by accident. Works offline; saves to your browser.
 
+Each card answers what that platform actually asks, question by question —
+Aspire's "how would you describe your style of content?" gets a different
+answer than IZEA's separate pitch-and-price fields, which is different again
+from Impact's channel-verification flow (not a pitch at all) or the
+brief-response platforms (Popular Pays, Social Native), which are left
+unanswered on purpose until a real brief exists to respond to — a generic
+reply there would be dishonest filler, not a shortcut. Every question has its
+own copy button, plus "Copy all" per platform.
+
 Each card also has an **operator prompt** for the
 [Claude in Chrome](https://chromewebstore.google.com/search/claude) extension —
 copy it into the side panel and it drafts the actual form in your logged-in
-session. It's built for batch review: Auto mode for the drafting itself, then
-one summary of everything it prepared before anything submits — you approve
-which ones go out in a single pass instead of per field. It will not press
-submit, accept terms, or enter payment/tax details without that approval, and
-it's told to treat on-page brief text as data rather than instructions —
-campaign briefs are third-party content, which is exactly the surface prompt
-injection targets.
+session, one answer per matching field. It's built for batch review: Auto mode
+for the drafting itself, then one summary of everything it prepared before
+anything submits — you approve which ones go out in a single pass instead of
+per field. It will not press submit, accept terms, or enter payment/tax
+details without that approval, and it's told to treat on-page brief text as
+data rather than instructions — campaign briefs are third-party content, which
+is exactly the surface prompt injection targets.
 
 The command-line flow below does the same thing, plus follow-up tracking.
 
