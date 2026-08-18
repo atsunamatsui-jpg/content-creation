@@ -1,0 +1,104 @@
+# Influencer campaign application toolkit
+
+A working kit for applying to influencer campaigns at volume without retyping
+your stats, rewriting the same pitch, or losing track of follow-ups.
+
+**Why it exists:** applying to campaigns is mostly repetitive data entry wrapped
+around a small amount of genuinely creative pitching. This automates the
+repetitive part so your attention goes to the part that actually wins deals —
+the campaign-specific idea.
+
+---
+
+## Quick start
+
+```bash
+# 1. Pull your own platform list out of Chrome (run on your own machine)
+python3 scripts/parse_bookmarks.py --stubs
+
+# 2. Fill in your details — this is the only place your stats live
+$EDITOR creator-profile.yml
+
+# 3. Render a ready-to-paste application
+python3 scripts/render_pitch.py templates/campaign-application.md \
+    --set brand="Muji" \
+    --set campaign="Spring kitchenware launch" \
+    --set hook="Your donabe is the one pot in my kitchen that never goes back in the cupboard." \
+    --set angle="A 'one pot, five weeknight dinners' series — unglamorous Tuesday cooking, not styled hero shots." \
+    --set deliverables="1x TikTok (45-60s) + 2x IG Stories"
+
+# 4. Log it so the follow-up isn't left to memory
+python3 scripts/track.py add --platform Aspire --brand Muji \
+    --campaign "Spring kitchenware" --rate 80000 --currency JPY
+
+# 5. Once a week, every week
+python3 scripts/track.py due
+```
+
+Not sure what a template needs?
+`python3 scripts/render_pitch.py <template> --fields` lists every placeholder and
+tells you which come from your profile and which you must pass with `--set`.
+
+---
+
+## What's here
+
+```
+creator-profile.yml        Your stats, rates and terms. Single source of truth.
+profile/
+  media-kit.md             One-page kit. Render → PDF → attach to pitches.
+  faq-answers.md           Canned answers to the nine questions every form asks.
+  bio-variants.md          Bios at 80 / 150 / 300 / 500 chars.
+templates/
+  campaign-application.md  The in-platform application box.
+  cold-pitch-email.md      Direct to brand, no platform in between.
+  gifting-to-paid.md       Turning a gifted offer into a paid one.
+  rate-negotiation.md      Scripts for the five conversations that recur.
+  follow-up.md             The two messages that produce most replies.
+  rejection-repitch.md     Staying in the file for next quarter.
+platforms/
+  README.md                Which platforms can actually be applied to.
+  platform-guide.md        Per-platform detail across all four categories.
+  notes/                   Your own findings, one file per platform.
+rates/rate-card.md         How to price, and what to price separately.
+tracker/campaigns.csv      The log.
+scripts/
+  parse_bookmarks.py       Chrome bookmark folder → platform list.
+  render_pitch.py          Profile + template → finished pitch.
+  track.py                 Applications, follow-ups due, win rate by platform.
+```
+
+---
+
+## The three things that actually move the numbers
+
+Everything here exists to serve these:
+
+**1. Specificity in the pitch.** The free-text box is the only place you compete.
+Almost everyone writes "I love your brand and my audience would too." A concrete
+content idea — a format, an opening frame, a reason it suits *your* audience —
+beats a bigger follower count surprisingly often. That's why `--set hook=` and
+`--set angle=` are the only things the template makes you write by hand.
+
+**2. Following up.** Follow-up #1 routinely out-replies the original message.
+Most creators never send it. `track.py due` exists solely to make that automatic.
+
+**3. Not underpricing usage rights.** The most expensive mistake in creator work
+isn't charging too little per post — it's handing over perpetual, all-channel
+usage inside a single-post fee. `rates/rate-card.md` covers pricing it separately.
+
+---
+
+## Honest scope
+
+This toolkit prepares applications. **It does not submit them.** Nothing here logs
+into a platform on your behalf or auto-applies to campaigns.
+
+That's partly practical — these platforms sit behind authenticated sessions, and
+several prohibit automated access in their terms. But it's mostly that the final
+step is the one where being a real person is the whole point. The toolkit removes
+the forty minutes of boilerplate so you can spend five minutes on the idea that
+actually gets you picked.
+
+Also worth knowing: paid, gifted, *and* affiliate content generally require
+disclosure, and the rules differ by country. `rates/rate-card.md` has more.

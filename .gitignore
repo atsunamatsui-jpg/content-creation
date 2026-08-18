@@ -1,0 +1,10 @@
+# Rendered pitches and media kits — regenerate, don't commit
+build/
+
+# Your exported bookmarks may contain unrelated private URLs
+bookmarks.html
+Bookmarks
+
+__pycache__/
+*.pyc
+.DS_Store
