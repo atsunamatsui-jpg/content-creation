@@ -1,9 +1,14 @@
 # Platforms
 
-## Get your actual list in here first
+## Your list is already here
 
-This folder ships with research on the platforms creators most commonly bookmark.
-To replace that with *your* list, run the parser on your own machine:
+**`my-platforms.md` covers your nine platforms** — Aspire, Popular Pays, Social
+Native, The Criqle, Massive Sway, FOHR, IZEA, Impact and Inmar Intelligence —
+categorized by whether you can actually apply to them, with per-platform detail
+in `notes/`. Start there.
+
+To regenerate from your Chrome bookmark folder later (it will pick up anything
+you've added since), run the parser on your own machine:
 
 ```bash
 # Option A — point it at Chrome directly (it auto-locates your profile)
@@ -16,8 +21,9 @@ python3 scripts/parse_bookmarks.py ~/Downloads/bookmarks.html --stubs
 python3 scripts/parse_bookmarks.py --list-folders
 ```
 
-That writes `discovered.md` (a checklist) and `discovered.csv` (feeds the tracker),
-and with `--stubs`, a note file per platform under `notes/`.
+That overwrites `discovered.md` and writes `discovered.csv` (which feeds the
+tracker). With `--stubs` it adds a note file per new platform under `notes/` —
+it never overwrites a note you have already edited.
 
 ## The one thing that saves the most time
 

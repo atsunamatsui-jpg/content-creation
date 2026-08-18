@@ -13,8 +13,8 @@ the campaign-specific idea.
 ## Quick start
 
 ```bash
-# 1. Pull your own platform list out of Chrome (run on your own machine)
-python3 scripts/parse_bookmarks.py --stubs
+# 1. Read the strategy for your platforms — which ones you can actually apply to
+cat platforms/my-platforms.md
 
 # 2. Fill in your details — this is the only place your stats live
 $EDITOR creator-profile.yml
@@ -57,9 +57,9 @@ templates/
   follow-up.md             The two messages that produce most replies.
   rejection-repitch.md     Staying in the file for next quarter.
 platforms/
-  README.md                Which platforms can actually be applied to.
-  platform-guide.md        Per-platform detail across all four categories.
-  notes/                   Your own findings, one file per platform.
+  my-platforms.md          YOUR nine platforms, and which accept applications.
+  platform-guide.md        The wider landscape, across all four categories.
+  notes/                   One file per platform, pre-filled for your list.
 rates/rate-card.md         How to price, and what to price separately.
 tracker/campaigns.csv      The log.
 scripts/

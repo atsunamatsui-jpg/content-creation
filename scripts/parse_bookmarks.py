@@ -65,6 +65,11 @@ KNOWN_PLATFORMS = {
     "afluencer.com": "Afluencer",
     "intellifluence.com": "Intellifluence",
     "cohley.com": "Cohley",
+    "socialnative.com": "Social Native",
+    "thecriqle.com": "The Criqle",
+    "massivesway.com": "Massive Sway",
+    "swaygroup.com": "Massive Sway (Sway Group)",
+    "inmar.com": "Inmar Intelligence",
     "fohr.co": "Fohr",
     "activate.social": "Activate",
     "stackinfluence.com": "Stack Influence",
@@ -243,6 +248,8 @@ def main():
     ap.add_argument("--folder", default=DEFAULT_FOLDER, help=f'Folder name (default: "{DEFAULT_FOLDER}")')
     ap.add_argument("--stubs", action="store_true", help="Write a research-notes stub per platform")
     ap.add_argument("--list-folders", action="store_true", help="Print every folder name and exit")
+    ap.add_argument("--force", action="store_true",
+                    help="Overwrite discovered.md even though it has been edited")
     args = ap.parse_args()
 
     source = Path(args.source) if args.source else autolocate()
@@ -298,6 +305,12 @@ def main():
             writer.writerow([p["name"], p["host"], p["urls"][0], p["titles"][0], slugify(p["name"])])
 
     md_path = REPO / "platforms" / "discovered.md"
+    # discovered.md carries ticked checkboxes once you start using it. Never
+    # silently throw that away.
+    if md_path.exists() and not args.force:
+        print(f"{md_path.relative_to(REPO)} already exists — not overwriting.")
+        print(f"Wrote {csv_path.relative_to(REPO)} only. Re-run with --force to replace it.")
+        return
     with open(md_path, "w", encoding="utf-8") as fh:
         fh.write(f"# Platforms from your \"{args.folder}\" bookmark folder\n\n")
         fh.write(f"Extracted from `{source}` — {len(platforms)} platforms, {len(links)} bookmarks.\n\n")
