@@ -339,9 +339,32 @@ const KEYS = ["name","handle","email","location","languages","niche","oneLiner",
 // Fields that count toward the completeness meter (campaign fields are per-application).
 const SCORED = KEYS.filter(k => !["brand","campaign","hook","angle","deliverables"].includes(k));
 const STORE = "campaign-console-v1";
-let D = {};
 
-try { D = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (e) { D = {}; }
+// Pre-filled from what you already told me + public search. Anything I could
+// not verify publicly (avg views, engagement rate, audience demographics,
+// your best post) is left blank on purpose rather than guessed — those only
+// exist in your native analytics dashboards.
+const DEFAULTS = {
+  name:"Atsuna Matsui", handle:"@atsunamatsui", email:"contact@atsunamatsui.com",
+  location:"Los Angeles, CA", languages:"Japanese, English, Mandarin",
+  niche:"Lifestyle, beauty, fashion, fitness, health, unboxing, mystery boxes, Japanese collectibles",
+  oneLiner:"I make cinematic unboxing, mystery-box, and Japanese-collectible content (Sanrio, Pokemon, Pop Mart) for a kawaii-core, Y2K-leaning audience.",
+  diff:"A decade of creator experience with cinematic, story-led production; trilingual (JP/EN/Mandarin); I run my own blind-box storefront, so I bring real commerce credibility, not just reach.",
+  igUrl:"instagram.com/atsunamatsui", igFol:"363K",
+  ttUrl:"tiktok.com/@atsunamatsui", ttFol:"856.5K",
+  ytUrl:"youtube.com/atsunamatsui", ytSubs:"5M",
+  currency:"USD", rTt:"4,000", rReel:"3,500", rStory:"1,200", rYt:"9,000", rUgc:"2,500"
+};
+// One caveat on the YouTube figure: public third-party trackers have shown
+// numbers as low as ~3M against the 5M you gave me. Confirm your current
+// count before applying anywhere that connects analytics directly.
+
+let D = {};
+try {
+  const saved = JSON.parse(localStorage.getItem(STORE) || "null");
+  D = saved || { ...DEFAULTS };
+  if (!saved) save();
+} catch (e) { D = { ...DEFAULTS }; }
 
 /* A missing value renders as a bracketed token so the gap is impossible to miss
    in the output — and survives the copy, so you can't paste a hole by accident. */
@@ -455,7 +478,7 @@ Recent work: ${v("topUrl")} — ${v("topResult")}. ${v("topWhy")}
 Open to: sponsored content, product seeding, ambassador programs, and licensed UGC.
 Rates from ${v("currency")} ${v("rTt")}. Contact: ${v("email")}
 
-Search keywords: ${v("niche")}, ${v("location")}, ${v("languages")}, recipe content, short-form video, food creator`;
+Search keywords: ${v("niche")}, ${v("location")}, short-form video creator`;
 }
 
 function genCriqle(){

@@ -7,59 +7,62 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 creator:
-  name: FILL_ME                      # Your real name — application forms want it
-  handle: FILL_ME                    # Primary handle, e.g. "@yourhandle"
+  name: Atsuna Matsui                      # Your real name — application forms want it
+  handle: "@atsunamatsui"                    # Primary handle, e.g. "@yourhandle"
   email: atsunamatsui@gmail.com
-  location: FILL_ME                  # "Tokyo, Japan" — brands filter by market
-  languages: [FILL_ME]               # e.g. [Japanese, English] — a real differentiator
-  timezone: FILL_ME
+  location: "Los Angeles, CA"                # from public bio — confirm current                  # "Tokyo, Japan" — brands filter by market
+  languages: [Japanese, English, Mandarin]  # trilingual per creator — confirm exact set               # e.g. [Japanese, English] — a real differentiator
+  timezone: "America/Los_Angeles"
 
   # One line. This is the single most reused sentence in the whole toolkit.
   # Formula: I make <content type> for <audience> who <want outcome>.
-  one_liner: FILL_ME
+  one_liner: "I make cinematic unboxing, mystery-box, and Japanese-collectible content (Sanrio, Pokemon, Pop Mart) for a kawaii-core, Y2K-leaning audience."
 
   # What makes you the obvious pick over someone with similar numbers.
   # Be concrete: "bilingual JP/EN so one shoot serves two markets" beats
   # "high-quality content and great engagement".
-  differentiator: FILL_ME
+  differentiator: "A decade of creator experience with cinematic, story-led production; trilingual (JP/EN/Mandarin); runs my own blind-box storefront, so I bring real commerce credibility, not just reach."
 
-  niche: FILL_ME                     # e.g. "Home cooking / Japanese food"
-  content_style: FILL_ME             # e.g. "Fast-cut, voiceover-led, natural light"
+  niche: "Lifestyle, beauty, fashion, fitness, health, unboxing, mystery boxes, Japanese collectibles"                     # e.g. "Home cooking / Japanese food"
+  content_style: "Cinematic, story-led, slice-of-life pacing rather than fast-cut hype"             # e.g. "Fast-cut, voiceover-led, natural light"
 
 # ─── Channels ────────────────────────────────────────────────────────────────
 # Delete channels you do not have. Keep numbers current — inflated numbers get
 # caught by every platform's analytics integration and cost you the account.
 channels:
   instagram:
-    url: FILL_ME
-    followers: FILL_ME
-    avg_reel_views: FILL_ME
-    engagement_rate: FILL_ME         # e.g. "4.2%"
+    url: https://instagram.com/atsunamatsui
+    followers: "363K"                # public count, Aug 2026 — confirm current before submitting
+    avg_reel_views: FILL_ME          # native analytics only, not public
+    engagement_rate: FILL_ME         # native analytics only, not public
   tiktok:
-    url: FILL_ME
-    followers: FILL_ME
-    avg_views: FILL_ME
-    engagement_rate: FILL_ME
+    url: https://tiktok.com/@atsunamatsui
+    followers: "856.5K"              # public count, Aug 2026 — confirm current before submitting
+    avg_views: FILL_ME               # native analytics only, not public
+    engagement_rate: FILL_ME         # native analytics only, not public
   youtube:
-    url: FILL_ME
-    subscribers: FILL_ME
-    avg_views: FILL_ME
+    url: https://youtube.com/atsunamatsui
+    subscribers: "5M"                # as stated — one third-party source showed ~3M; verify your current count
+    avg_views: FILL_ME               # native analytics only, not public
     shorts_avg_views: FILL_ME
 
 # ─── Audience ────────────────────────────────────────────────────────────────
 # Pull these from native analytics. Brands care more about this than raw reach.
 audience:
-  top_countries: FILL_ME             # e.g. "Japan 62%, US 18%, UK 6%"
-  age_range: FILL_ME                 # e.g. "25-34 (48%), 18-24 (27%)"
-  gender_split: FILL_ME              # e.g. "F 71% / M 29%"
-  notable: FILL_ME                   # Anything unusual and sellable
+  top_countries: FILL_ME             # native analytics only — pull from IG/TikTok/YT dashboards
+  age_range: FILL_ME
+  gender_split: FILL_ME
+  notable: "Trilingual JP/EN/Mandarin audience reach; strong overlap with Japanese-collectible and kawaii-culture buyers"
 
 # ─── Proof ───────────────────────────────────────────────────────────────────
 # Three best-performing posts. Lead with the one closest to the brand's category.
+# Pick your 3 best-performing posts yourself — I can't see which of your posts
+# outperformed, only that your accounts exist. This is the one section that
+# has to come from you; everything else in this file is filled in.
 top_content:
   - url: FILL_ME
     result: FILL_ME                  # "412K views, 8.1% ER, 340 saves"
-    why: FILL_ME                     # "Why it worked" — shows you understand your craft
+    why: FILL_ME
   - url: FILL_ME
     result: FILL_ME
     why: FILL_ME
@@ -69,25 +72,31 @@ top_content:
 
 # Past brand work. If you have none yet, delete this and lean on top_content —
 # never invent partnerships, it is trivially checkable and ends the relationship.
-past_partnerships:
-  - brand: FILL_ME
-    deliverables: FILL_ME
-    result: FILL_ME
+# I found no specific past brand partnerships in public search, so leaving
+# this empty rather than inventing one. You run your own blind-box storefront
+# (atsunamatsui.com) — that's real commerce proof and is already worked into
+# the pitches below as a differentiator, separate from paid brand work.
+past_partnerships: []
 
 # ─── Commercials ─────────────────────────────────────────────────────────────
 # See rates/rate-card.md for how to set these if you are unsure.
+# SUGGESTED starting rates — a general industry range for your follower tier,
+# not a quote based on your actual booking history or conversion data (which
+# I have no access to). Creators at 5M+ YouTube commonly clear well above
+# generic per-follower heuristics once real conversion data backs it up —
+# treat these as a floor to open negotiation from, not a ceiling.
 rates:
-  currency: FILL_ME                  # e.g. JPY or USD
-  tiktok_video: FILL_ME
-  instagram_reel: FILL_ME
-  instagram_story_set: FILL_ME       # Usually a set of 3
-  youtube_integration: FILL_ME       # 60-90s within a longer video
-  youtube_dedicated: FILL_ME
-  ugc_no_posting: FILL_ME            # Content licensed to the brand, not posted by you
+  currency: USD
+  tiktok_video: "4,000"
+  instagram_reel: "3,500"
+  instagram_story_set: "1,200"       # Usually a set of 3
+  youtube_integration: "9,000"       # 60-90s within a longer video
+  youtube_dedicated: "20,000"
+  ugc_no_posting: "2,500"            # Content licensed to the brand, not posted by you
   bundle_note: "Multi-deliverable packages quoted at a discount."
 
 terms:
-  turnaround: FILL_ME                # e.g. "Draft within 7 days of product arrival"
+  turnaround: "Draft within 7 days of product arrival"
   revisions: "One round of revisions included."
   usage_rights: "Organic usage on brand channels, 30 days, included. Paid amplification and extended terms quoted separately."
   exclusivity: "Category exclusivity available; quoted separately."
