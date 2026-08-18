@@ -20,10 +20,14 @@ you can't paste a hole by accident. Works offline; saves to your browser.
 
 Each card also has an **operator prompt** for the
 [Claude in Chrome](https://chromewebstore.google.com/search/claude) extension —
-copy it into the side panel and it fills the actual form in your logged-in
-session, field by field. Run it in Manual approval mode and review before it
-submits: campaign briefs are third-party text on the page, which is exactly the
-surface prompt injection targets, and the prompt tells it as much.
+copy it into the side panel and it drafts the actual form in your logged-in
+session. It's built for batch review: Auto mode for the drafting itself, then
+one summary of everything it prepared before anything submits — you approve
+which ones go out in a single pass instead of per field. It will not press
+submit, accept terms, or enter payment/tax details without that approval, and
+it's told to treat on-page brief text as data rather than instructions —
+campaign briefs are third-party content, which is exactly the surface prompt
+injection targets.
 
 The command-line flow below does the same thing, plus follow-up tracking.
 
