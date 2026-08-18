@@ -1,0 +1,609 @@
+<title>Campaign Application Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F5F6F8; --panel:#FFFFFF; --panel-2:#EFF1F4; --sunken:#E7EAEE;
+  --ink:#141A21; --ink-2:#414D5A; --ink-3:#6B7887; --line:#D8DDE4; --line-2:#C3CAD4;
+  --accent:#C9265E; --accent-ink:#FFFFFF; --accent-soft:#FBE9EF;
+  --go:#0F766E; --go-soft:#DDF0ED; --mid:#B45309; --mid-soft:#FAECD9;
+  --hold:#5A6675; --hold-soft:#E4E8ED; --gap:#C9265E; --gap-soft:#FBE4EC;
+  --shadow:0 1px 2px rgba(20,26,33,.06),0 8px 24px -12px rgba(20,26,33,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1318; --panel:#161C23; --panel-2:#1D242C; --sunken:#111820;
+    --ink:#E8ECF1; --ink-2:#AEB9C6; --ink-3:#7C8896; --line:#28313A; --line-2:#38434F;
+    --accent:#F4638F; --accent-ink:#2A0512; --accent-soft:#2E1520;
+    --go:#4DBFAF; --go-soft:#122A28; --mid:#E0A35A; --mid-soft:#2C2114;
+    --hold:#94A1B0; --hold-soft:#1E252D; --gap:#F4638F; --gap-soft:#33131F;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1318; --panel:#161C23; --panel-2:#1D242C; --sunken:#111820;
+  --ink:#E8ECF1; --ink-2:#AEB9C6; --ink-3:#7C8896; --line:#28313A; --line-2:#38434F;
+  --accent:#F4638F; --accent-ink:#2A0512; --accent-soft:#2E1520;
+  --go:#4DBFAF; --go-soft:#122A28; --mid:#E0A35A; --mid-soft:#2C2114;
+  --hold:#94A1B0; --hold-soft:#1E252D; --gap:#F4638F; --gap-soft:#33131F;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;text-wrap:balance;margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-3);
+}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ── shell ─────────────────────────────────────────────── */
+.wrap{max-width:1500px;margin:0 auto;padding:0 24px 96px}
+
+header.top{
+  padding:40px 0 26px; border-bottom:1px solid var(--line);
+  display:flex; flex-wrap:wrap; gap:28px; align-items:flex-end; justify-content:space-between;
+}
+header.top h1{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.022em;line-height:1.05}
+header.top p{margin:10px 0 0;color:var(--ink-2);max-width:60ch}
+
+.meter{min-width:260px}
+.meter .row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:7px}
+.meter .val{font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink)}
+.bar{height:6px;background:var(--sunken);border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .35s cubic-bezier(.4,0,.2,1)}
+
+.layout{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:32px;margin-top:32px;align-items:start}
+@media (max-width:1080px){.layout{grid-template-columns:1fr}}
+
+/* ── panels ────────────────────────────────────────────── */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+aside.rail{position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto}
+@media (max-width:1080px){aside.rail{position:static;max-height:none}}
+
+.phead{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:16px 18px;border-bottom:1px solid var(--line);
+}
+.phead h2{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.pbody{padding:16px 18px;display:flex;flex-direction:column;gap:18px}
+
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+legend{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);padding:0 0 3px;
+}
+.f{display:flex;flex-direction:column;gap:5px}
+.f label{font-size:12.5px;font-weight:500;color:var(--ink-2)}
+.f input,.f textarea{
+  width:100%;padding:8px 10px;background:var(--sunken);color:var(--ink);
+  border:1px solid var(--line);border-radius:7px;font:inherit;font-size:13.5px;
+}
+.f textarea{resize:vertical;min-height:62px;line-height:1.5}
+.f input::placeholder,.f textarea::placeholder{color:var(--ink-3);opacity:.75}
+.f input:focus,.f textarea:focus{outline:none;border-color:var(--accent);background:var(--panel)}
+.trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hint{font-size:11.5px;color:var(--ink-3);line-height:1.45}
+
+/* ── buttons ───────────────────────────────────────────── */
+button{font:inherit;cursor:pointer;border-radius:7px;transition:background .15s,border-color .15s,color .15s}
+.btn{
+  padding:7px 13px;background:var(--panel-2);color:var(--ink);border:1px solid var(--line-2);
+  font-size:12.5px;font-weight:500;
+}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.copied{background:var(--go);border-color:var(--go);color:#fff}
+
+/* ── group headings ────────────────────────────────────── */
+.group{margin:0 0 14px}
+.group:not(:first-child){margin-top:38px}
+.group h2{font-size:19px;font-weight:700;letter-spacing:-.015em;margin-bottom:5px}
+.group p{margin:0;color:var(--ink-2);font-size:13.5px;max-width:72ch}
+
+/* ── platform cards ────────────────────────────────────── */
+.cards{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.card > summary{
+  list-style:none;cursor:pointer;padding:15px 18px;display:flex;align-items:center;gap:13px;
+}
+.card > summary::-webkit-details-marker{display:none}
+.card > summary:hover{background:var(--panel-2)}
+.stripe{width:3px;align-self:stretch;border-radius:99px;flex:none}
+.card[data-cat="go"] .stripe{background:var(--go)}
+.card[data-cat="mid"] .stripe{background:var(--mid)}
+.card[data-cat="hold"] .stripe{background:var(--hold)}
+.card[data-cat="check"] .stripe{background:var(--line-2)}
+.cardname{flex:1;min-width:0}
+.cardname h3{font-size:15.5px;font-weight:700;letter-spacing:-.01em}
+.cardname p{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.chip{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  padding:4px 8px;border-radius:5px;white-space:nowrap;flex:none;font-weight:500;
+}
+.chip.go{background:var(--go-soft);color:var(--go)}
+.chip.mid{background:var(--mid-soft);color:var(--mid)}
+.chip.hold{background:var(--hold-soft);color:var(--hold)}
+.chip.check{background:var(--sunken);color:var(--ink-3)}
+.caret{color:var(--ink-3);font-size:11px;flex:none;transition:transform .2s}
+.card[open] .caret{transform:rotate(90deg)}
+
+.cardbody{padding:2px 18px 18px;border-top:1px solid var(--line)}
+.asks{margin:16px 0 0;padding:14px 16px;background:var(--sunken);border-radius:9px}
+.asks h4{margin:0 0 8px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.asks ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:4px}
+.asks li{font-size:13px;color:var(--ink-2)}
+.note{margin:14px 0 0;font-size:13px;color:var(--ink-2);line-height:1.55}
+.note strong{color:var(--ink)}
+
+.outhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 8px}
+.out{
+  background:var(--sunken);border:1px solid var(--line);border-radius:9px;padding:15px 17px;
+  white-space:pre-wrap;font-size:13.5px;line-height:1.6;color:var(--ink);
+  max-height:460px;overflow:auto;
+}
+.out .gap{background:var(--gap-soft);color:var(--gap);padding:1px 5px;border-radius:4px;font-weight:600;font-size:12.5px}
+.count{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+.banner{
+  margin-top:20px;padding:13px 16px;border-radius:9px;background:var(--accent-soft);
+  border:1px solid var(--accent);color:var(--ink);font-size:13px;line-height:1.55;
+}
+.banner strong{font-weight:600}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;line-height:1.6;max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <p class="eyebrow">Nine platforms · one profile</p>
+    <h1>Campaign Application Console</h1>
+    <p>Fill your details once on the left. Every application below rewrites itself as you type. Copy, paste into the platform tab you're already signed into, submit.</p>
+  </div>
+  <div class="meter">
+    <div class="row"><span class="eyebrow">Profile complete</span><span class="val" id="pct">0%</span></div>
+    <div class="bar"><span id="barfill" style="width:0%"></span></div>
+    <div class="row" style="margin:9px 0 0"><span class="eyebrow">Gaps remaining</span><span class="count" id="gapcount">—</span></div>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- ── PROFILE RAIL ──────────────────────────────────── -->
+  <aside class="rail panel">
+    <div class="phead">
+      <h2>Your profile</h2>
+      <button class="btn" id="clearBtn" type="button">Reset</button>
+    </div>
+    <div class="pbody">
+      <p class="hint">Saved in this browser as you type. Approximate numbers beat blank ones — round figures are fine.</p>
+
+      <fieldset>
+        <legend>Identity</legend>
+        <div class="duo">
+          <div class="f"><label for="name">Name</label><input id="name" data-k="name" placeholder="Full name"></div>
+          <div class="f"><label for="handle">Handle</label><input id="handle" data-k="handle" placeholder="@yourhandle"></div>
+        </div>
+        <div class="f"><label for="email">Email</label><input id="email" data-k="email" placeholder="you@example.com"></div>
+        <div class="duo">
+          <div class="f"><label for="location">Location</label><input id="location" data-k="location" placeholder="Tokyo, Japan"></div>
+          <div class="f"><label for="languages">Languages</label><input id="languages" data-k="languages" placeholder="Japanese, English"></div>
+        </div>
+        <div class="f"><label for="niche">Niche</label><input id="niche" data-k="niche" placeholder="Japanese home cooking"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>The two sentences that do the work</legend>
+        <div class="f">
+          <label for="oneLiner">One-liner</label>
+          <textarea id="oneLiner" data-k="oneLiner" placeholder="I make 30-second Japanese home-cooking videos for people who think they can't cook."></textarea>
+          <p class="hint">I make <em>what</em> for <em>whom</em> who want <em>what outcome</em>.</p>
+        </div>
+        <div class="f">
+          <label for="diff">Why you over someone with the same numbers</label>
+          <textarea id="diff" data-k="diff" placeholder="Bilingual JP/EN, so one shoot serves both markets."></textarea>
+          <p class="hint">Concrete and checkable. Not "high-quality content and great engagement".</p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Channels</legend>
+        <div class="f"><label for="igUrl">Instagram</label><input id="igUrl" data-k="igUrl" placeholder="instagram.com/you"></div>
+        <div class="trio">
+          <div class="f"><label for="igFol">Followers</label><input id="igFol" data-k="igFol" placeholder="24K"></div>
+          <div class="f"><label for="igViews">Avg views</label><input id="igViews" data-k="igViews" placeholder="31K"></div>
+          <div class="f"><label for="igEr">Engagement</label><input id="igEr" data-k="igEr" placeholder="4.2%"></div>
+        </div>
+        <div class="f"><label for="ttUrl">TikTok</label><input id="ttUrl" data-k="ttUrl" placeholder="tiktok.com/@you"></div>
+        <div class="trio">
+          <div class="f"><label for="ttFol">Followers</label><input id="ttFol" data-k="ttFol" placeholder="58K"></div>
+          <div class="f"><label for="ttViews">Avg views</label><input id="ttViews" data-k="ttViews" placeholder="90K"></div>
+          <div class="f"><label for="ttEr">Engagement</label><input id="ttEr" data-k="ttEr" placeholder="7.1%"></div>
+        </div>
+        <div class="f"><label for="ytUrl">YouTube</label><input id="ytUrl" data-k="ytUrl" placeholder="youtube.com/@you"></div>
+        <div class="duo">
+          <div class="f"><label for="ytSubs">Subscribers</label><input id="ytSubs" data-k="ytSubs" placeholder="12K"></div>
+          <div class="f"><label for="ytViews">Avg views</label><input id="ytViews" data-k="ytViews" placeholder="8K"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Audience</legend>
+        <div class="f"><label for="geo">Top countries</label><input id="geo" data-k="geo" placeholder="Japan 62%, US 18%, UK 6%"></div>
+        <div class="duo">
+          <div class="f"><label for="age">Age</label><input id="age" data-k="age" placeholder="25–34 (48%)"></div>
+          <div class="f"><label for="gender">Gender</label><input id="gender" data-k="gender" placeholder="F 71% / M 29%"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Best-performing post</legend>
+        <div class="f"><label for="topUrl">Link</label><input id="topUrl" data-k="topUrl" placeholder="tiktok.com/@you/video/…"></div>
+        <div class="f"><label for="topResult">Result</label><input id="topResult" data-k="topResult" placeholder="412K views, 8.1% ER, 340 saves"></div>
+        <div class="f"><label for="topWhy">Why it worked</label><textarea id="topWhy" data-k="topWhy" placeholder="First frame showed the finished dish before any talking."></textarea></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Rates</legend>
+        <div class="duo">
+          <div class="f"><label for="currency">Currency</label><input id="currency" data-k="currency" placeholder="JPY"></div>
+          <div class="f"><label for="rTt">TikTok video</label><input id="rTt" data-k="rTt" placeholder="80,000"></div>
+        </div>
+        <div class="duo">
+          <div class="f"><label for="rReel">IG Reel</label><input id="rReel" data-k="rReel" placeholder="75,000"></div>
+          <div class="f"><label for="rStory">Story set (3)</label><input id="rStory" data-k="rStory" placeholder="35,000"></div>
+        </div>
+        <div class="duo">
+          <div class="f"><label for="rYt">YT integration</label><input id="rYt" data-k="rYt" placeholder="150,000"></div>
+          <div class="f"><label for="rUgc">UGC, not posted</label><input id="rUgc" data-k="rUgc" placeholder="45,000"></div>
+        </div>
+        <p class="hint">No idea what to charge? ~1% of followers per post is the usual floor. Price usage rights separately — that's where the money leaks.</p>
+      </fieldset>
+    </div>
+  </aside>
+
+  <!-- ── OUTPUT ────────────────────────────────────────── -->
+  <main>
+    <section class="panel" style="padding:18px">
+      <div class="phead" style="padding:0 0 14px;margin-bottom:14px">
+        <h2>The campaign you're applying to</h2>
+        <span class="eyebrow">Feeds Aspire &amp; IZEA</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <div class="duo">
+          <div class="f"><label for="brand">Brand</label><input id="brand" data-k="brand" placeholder="Muji"></div>
+          <div class="f"><label for="campaign">Campaign</label><input id="campaign" data-k="campaign" placeholder="Spring kitchenware launch"></div>
+        </div>
+        <div class="f">
+          <label for="hook">Hook — one true, specific sentence about the product</label>
+          <textarea id="hook" data-k="hook" placeholder="Your donabe is the one pot in my kitchen that never goes back in the cupboard."></textarea>
+          <p class="hint">Never "I'm a huge fan of your brand." Everyone writes it; it signals nothing.</p>
+        </div>
+        <div class="f">
+          <label for="angle">Content angle — the actual idea</label>
+          <textarea id="angle" data-k="angle" placeholder="A 'one pot, five weeknight dinners' series — unglamorous Tuesday cooking, not styled hero shots."></textarea>
+          <p class="hint">The highest-leverage field on any application. Most applicants leave it vague, so anything concrete wins.</p>
+        </div>
+        <div class="f"><label for="deliverables">Deliverables you're proposing</label><input id="deliverables" data-k="deliverables" placeholder="1× TikTok (45–60s) + 2× IG Stories with link sticker"></div>
+      </div>
+      <div class="banner">
+        <strong>Only three of your nine take proactive applications.</strong> Aspire and IZEA have browsable campaigns; Impact takes per-brand affiliate applications. The other six find you — so there, the profile text below <em>is</em> the application.
+      </div>
+    </section>
+
+    <div class="group" style="margin-top:36px">
+      <h2>Apply directly</h2>
+      <p>Browsable campaigns. This is where application volume actually converts — paste, submit, log it, move on.</p>
+    </div>
+    <div class="cards" id="cardsGo"></div>
+
+    <div class="group">
+      <h2>Hybrid — complete the profile, get matched</h2>
+      <p>You don't pitch campaigns here so much as get matched to them. Both skew toward content licensing, so price on the UGC line unless a brief explicitly includes posting.</p>
+    </div>
+    <div class="cards" id="cardsMid"></div>
+
+    <div class="group">
+      <h2>Inbound only — you get found, not accepted</h2>
+      <p>No campaign board to work. One thorough setup pass, then stop touching them. The text below is what makes you surface in a brand's search.</p>
+    </div>
+    <div class="cards" id="cardsHold"></div>
+
+    <footer>
+      <strong style="color:var(--ink)">This console prepares applications; it doesn't submit them.</strong> Nothing here logs into a platform as you — several prohibit automated access, and a bot-submitted application under your name is an account risk. The paste step is cheap insurance.<br><br>
+      Platform categorizations are researched starting points, not gospel — this industry rebrands and gets acquired constantly. Paid, gifted and affiliate content all generally require disclosure, and the rules differ by country.
+    </footer>
+  </main>
+</div>
+</div>
+
+<script>
+"use strict";
+const KEYS = ["name","handle","email","location","languages","niche","oneLiner","diff",
+  "igUrl","igFol","igViews","igEr","ttUrl","ttFol","ttViews","ttEr","ytUrl","ytSubs","ytViews",
+  "geo","age","gender","topUrl","topResult","topWhy","currency","rTt","rReel","rStory","rYt","rUgc",
+  "brand","campaign","hook","angle","deliverables"];
+
+// Fields that count toward the completeness meter (campaign fields are per-application).
+const SCORED = KEYS.filter(k => !["brand","campaign","hook","angle","deliverables"].includes(k));
+const STORE = "campaign-console-v1";
+let D = {};
+
+try { D = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (e) { D = {}; }
+
+/* A missing value renders as a bracketed token so the gap is impossible to miss
+   in the output — and survives the copy, so you can't paste a hole by accident. */
+const LABEL = {
+  name:"YOUR NAME", handle:"YOUR HANDLE", email:"YOUR EMAIL", location:"YOUR LOCATION",
+  languages:"YOUR LANGUAGES", niche:"YOUR NICHE", oneLiner:"YOUR ONE-LINER",
+  diff:"WHAT MAKES YOU DIFFERENT", igUrl:"IG LINK", igFol:"IG FOLLOWERS", igViews:"IG AVG VIEWS",
+  igEr:"IG ENGAGEMENT", ttUrl:"TIKTOK LINK", ttFol:"TIKTOK FOLLOWERS", ttViews:"TIKTOK AVG VIEWS",
+  ttEr:"TIKTOK ENGAGEMENT", ytUrl:"YOUTUBE LINK", ytSubs:"YT SUBSCRIBERS", ytViews:"YT AVG VIEWS",
+  geo:"TOP COUNTRIES", age:"AGE RANGE", gender:"GENDER SPLIT", topUrl:"BEST POST LINK",
+  topResult:"ITS NUMBERS", topWhy:"WHY IT WORKED", currency:"CURRENCY", rTt:"TIKTOK RATE",
+  rReel:"REEL RATE", rStory:"STORY RATE", rYt:"YOUTUBE RATE", rUgc:"UGC RATE",
+  brand:"BRAND", campaign:"CAMPAIGN NAME", hook:"YOUR HOOK", angle:"YOUR CONTENT ANGLE",
+  deliverables:"DELIVERABLES"
+};
+const v = k => { const s = (D[k] || "").trim(); return s || "[" + (LABEL[k] || k.toUpperCase()) + "]"; };
+const has = k => !!(D[k] || "").trim();
+
+/* Only mention a channel in generated copy if it actually has numbers. */
+function channelLines(){
+  const out = [];
+  if (has("ttFol") || has("ttViews")) out.push(`TikTok ${v("ttFol")} followers · ${v("ttViews")} avg views${has("ttEr") ? " · " + v("ttEr") + " ER" : ""}`);
+  if (has("igFol") || has("igViews")) out.push(`Instagram ${v("igFol")} followers · ${v("igViews")} avg views${has("igEr") ? " · " + v("igEr") + " ER" : ""}`);
+  if (has("ytSubs") || has("ytViews")) out.push(`YouTube ${v("ytSubs")} subscribers · ${v("ytViews")} avg views`);
+  return out.length ? out : ["[ADD AT LEAST ONE CHANNEL'S NUMBERS]"];
+}
+const rateLine = () => `${v("currency")} ${v("rTt")} per TikTok · ${v("currency")} ${v("rReel")} per Reel · ${v("currency")} ${v("rUgc")} for licensed content I don't post`;
+
+/* ── generators, one per platform shape ─────────────────── */
+function genCampaign(){            // Aspire, IZEA — full campaign application
+  return `Hi ${v("brand")} team,
+
+${v("hook")}
+
+I'm ${v("name")} (${v("handle")}) — ${v("oneLiner")} My audience is ${v("geo")}, mostly ${v("age")}, which lines up with who ${v("campaign")} is aimed at.
+
+My idea for this campaign: ${v("angle")}
+
+Why me specifically: ${v("diff")}
+
+Recent proof — ${v("topUrl")} did ${v("topResult")}. ${v("topWhy")}
+
+Deliverables I'm proposing: ${v("deliverables")}
+Turnaround: draft within 7 days of product arrival, one round of revisions.
+Usage: organic on your channels for 30 days included. Paid amplification and extended terms quoted separately.
+
+Happy to adjust the concept to your brief.
+
+${v("name")}
+${v("email")}`;
+}
+
+function genImpact(){              // affiliate program application
+  return `Hi ${v("brand")} team,
+
+I'd like to join your partner program. I'm ${v("name")} (${v("handle")}) — ${v("oneLiner")}
+
+Where the traffic comes from:
+${channelLines().map(l => "· " + l).join("\n")}
+
+Audience: ${v("geo")} · ${v("age")} · ${v("gender")}
+
+Why the fit is real: I already make ${v("niche")} content, so your products land in front of an audience actively looking for them rather than being introduced cold. ${v("topUrl")} did ${v("topResult")} — ${v("topWhy")}
+
+${v("diff")}
+
+I disclose affiliate relationships clearly on every post. Happy to share a full media kit.
+
+${v("name")}
+${v("email")}`;
+}
+
+function genUgc(){                 // Popular Pays, Social Native — production-led
+  return `${v("name")} — ${v("handle")}
+
+${v("oneLiner")}
+
+What I make: ${v("niche")}. ${v("diff")}
+
+Production notes: I shoot, direct and edit everything myself, so a brand gets finished assets rather than raw footage. Comfortable delivering both channel-ready content and ad-ready cutdowns in vertical and square.
+
+Reach:
+${channelLines().map(l => "· " + l).join("\n")}
+
+Audience: ${v("geo")} · ${v("age")} · ${v("gender")}
+
+Portfolio proof: ${v("topUrl")} — ${v("topResult")}. ${v("topWhy")}
+
+Rates: ${rateLine()}
+Content licensed for your paid channels is priced separately from content I post — tell me which you need and the usage window, and I'll quote it.
+
+Based in ${v("location")} · ${v("languages")} · ${v("email")}`;
+}
+
+function genProfile(){             // FOHR, Massive Sway, Inmar — be findable
+  return `${v("name")} · ${v("handle")}
+
+${v("oneLiner")}
+
+${v("niche")} creator based in ${v("location")}, working in ${v("languages")}.
+
+${v("diff")}
+
+Reach:
+${channelLines().map(l => "· " + l).join("\n")}
+
+Audience: ${v("geo")} · ${v("age")} · ${v("gender")}
+
+Recent work: ${v("topUrl")} — ${v("topResult")}. ${v("topWhy")}
+
+Open to: sponsored content, product seeding, ambassador programs, and licensed UGC.
+Rates from ${v("currency")} ${v("rTt")}. Contact: ${v("email")}
+
+Search keywords: ${v("niche")}, ${v("location")}, ${v("languages")}, recipe content, short-form video, food creator`;
+}
+
+function genCriqle(){
+  return `${v("name")} · ${v("handle")} · ${v("email")}
+
+${v("oneLiner")}
+
+${v("niche")} · ${v("location")} · ${v("languages")}
+
+${channelLines().map(l => "· " + l).join("\n")}
+
+Audience: ${v("geo")} · ${v("age")} · ${v("gender")}
+Best recent post: ${v("topUrl")} — ${v("topResult")}
+Rates from ${v("currency")} ${v("rTt")}. ${v("diff")}`;
+}
+
+/* ── platform definitions ───────────────────────────────── */
+const PLATFORMS = [
+  { id:"aspire", name:"Aspire", cat:"go", chip:"Open campaigns", tag:"Your main board — apply at volume",
+    asks:["Connected social accounts — it reads real analytics, so don't inflate anything","Audience demographics: geo, age, gender","Free-text pitch (the box below)","Your rate, or acceptance of the campaign's fixed fee","Portfolio pieces and prior brand work"],
+    note:"Profile completeness affects what campaigns you get shown. <strong>Apply the day a campaign appears</strong> — early applications get read while the reviewer is still reading carefully.",
+    gen:genCampaign, out:"Campaign application" },
+
+  { id:"izea", name:"IZEA", cat:"go", chip:"Opportunities", tag:"Casting calls and listings — check on a schedule",
+    asks:["Profile with connected channels and audience data","Per-channel listed rates — IZEA leans on these more than most","Content categories, which feed brand search","Response to the specific opportunity brief"],
+    note:"Your <strong>listed rates do real work here</strong>. Too low and you anchor yourself down permanently; too high with a thin profile and you never surface at all.",
+    gen:genCampaign, out:"Campaign application" },
+
+  { id:"impact", name:"Impact", cat:"go", chip:"Per-brand programs", tag:"Affiliate income, not campaign work",
+    asks:["Business and tax details — this is a payments platform, expect real onboarding","Channel and audience information","A separate application per brand program"],
+    note:"Different job entirely: commission on conversions, set up once. Apply to programs matching content you <strong>already</strong> make — affiliate income follows existing traffic, it doesn't create it. Check whether terms allow affiliate links in the same post as sponsored content; some prohibit stacking.",
+    gen:genImpact, out:"Program application" },
+
+  { id:"popularpays", name:"Popular Pays", cat:"mid", chip:"Matched", tag:"Lightricks — portfolio outweighs follower count",
+    asks:["Portfolio — weighted more heavily here than raw reach","Connected channels and audience data","Content categories and style","Rates, including content-only with no posting"],
+    note:"Your <strong>portfolio does the selling</strong>, so upload your best production work rather than just your highest-view posts. Read each brief for whether you're posting or only delivering assets — different products, different rates.",
+    gen:genUgc, out:"Profile / brief response" },
+
+  { id:"socialnative", name:"Social Native", cat:"mid", chip:"UGC-weighted", tag:"Expect ad assets more than posting deals",
+    asks:["Portfolio and content samples","Channels and audience data","Content-production rates"],
+    note:"Briefs here are often <strong>“produce assets we'll run in our ads”</strong> rather than “post to your audience.” Price on the UGC line unless posting is explicit, and read the usage window on every brief — perpetual all-channel usage should cost more.",
+    gen:genUgc, out:"Profile / brief response" },
+
+  { id:"fohr", name:"FOHR", cat:"hold", chip:"Discovery", tag:"Brands search — you don't apply",
+    asks:["Connected social accounts (this is the whole point — it verifies you)","Complete bio, categories, location","Portfolio and previous work"],
+    note:"Historically puts real weight on <strong>audience-quality scoring</strong>, so connected analytics matter more here than follower count. Do one good setup pass, then leave it. If a brand invites you through Fohr, that's a warm lead — negotiate, don't pitch.",
+    gen:genProfile, out:"Profile bio" },
+
+  { id:"massivesway", name:"Massive Sway", cat:"hold", chip:"Join once", tag:"Sway Group network — then it's email",
+    asks:["Channel links and audience stats","Content categories","Sometimes a rate range"],
+    note:"You apply to join the <strong>network</strong> once; after that opportunities arrive by email. Filter those into a folder you actually check — network opportunities are usually first-come, so the creators who win them reply fastest, not best.",
+    gen:genProfile, out:"Network application" },
+
+  { id:"inmar", name:"Inmar Intelligence", cat:"hold", chip:"Community", tag:"Retail & CPG brands — a different pool",
+    asks:["Channels, audience data, demographics","Household/shopper information is plausible here given the retail focus — decide what you're comfortable sharing","Content categories"],
+    note:"Grew out of acquiring Collective Bias. Campaign invites skew <strong>CPG, grocery and retail</strong>, often with in-store tie-ins — low overlap with the DTC brands on Aspire, so it costs little to be in both. Briefs are more prescriptive than usual; read requirements closely.",
+    gen:genProfile, out:"Community profile" },
+
+  { id:"criqle", name:"The Criqle", cat:"check", chip:"Verify first", tag:"Least documented — confirm what it is",
+    asks:["Is there a browsable campaign list, or is it invite-only?","Gifted, paid, or UGC licensing?","Does it connect analytics, or do you type numbers in?","Does it take a commission on deals?","Which brands are on it — and do they overlap with Aspire's?"],
+    note:"I couldn't verify this one, and I'd rather say so than invent detail you'd act on. <strong>Run the five checks above</strong> next time you're in the dashboard, then treat it like any other platform. Meanwhile the generic profile below is enough to complete signup.",
+    gen:genCriqle, out:"Signup profile" }
+];
+
+/* ── render ─────────────────────────────────────────────── */
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const mark = s => esc(s).replace(/\[([A-Z0-9''’\- ]+)\]/g, '<span class="gap">$1</span>');
+
+function buildCards(){
+  const groups = { go:[], mid:[], hold:[] };
+  PLATFORMS.forEach(p => (groups[p.cat === "check" ? "hold" : p.cat]).push(p));
+  const render = list => list.map(p => `
+    <details class="card" data-cat="${p.cat}" id="card-${p.id}"${p.cat === "go" ? " open" : ""}>
+      <summary>
+        <span class="stripe"></span>
+        <span class="cardname"><h3>${p.name}</h3><p>${p.tag}</p></span>
+        <span class="chip ${p.cat}">${p.chip}</span>
+        <span class="caret">&#9656;</span>
+      </summary>
+      <div class="cardbody">
+        <div class="asks"><h4>What this form asks for</h4><ul>${p.asks.map(a => `<li>${a}</li>`).join("")}</ul></div>
+        <p class="note">${p.note}</p>
+        <div class="outhead">
+          <span class="eyebrow">${p.out}</span>
+          <span style="display:flex;align-items:center;gap:10px">
+            <span class="count" id="len-${p.id}"></span>
+            <button class="btn primary" type="button" data-copy="${p.id}">Copy</button>
+          </span>
+        </div>
+        <div class="out" id="out-${p.id}"></div>
+      </div>
+    </details>`).join("");
+  document.getElementById("cardsGo").innerHTML   = render(groups.go);
+  document.getElementById("cardsMid").innerHTML  = render(groups.mid);
+  document.getElementById("cardsHold").innerHTML = render(groups.hold);
+}
+
+function refresh(){
+  PLATFORMS.forEach(p => {
+    const text = p.gen();
+    const el = document.getElementById("out-" + p.id);
+    if (!el) return;
+    el.innerHTML = mark(text);
+    el.dataset.raw = text;
+    const holes = (text.match(/\[[A-Z0-9''’\- ]+\]/g) || []).length;
+    document.getElementById("len-" + p.id).textContent =
+      text.length + " chars" + (holes ? " · " + holes + " gap" + (holes > 1 ? "s" : "") : " · ready");
+  });
+  const done = SCORED.filter(has).length;
+  const pct = Math.round(done / SCORED.length * 100);
+  document.getElementById("pct").textContent = pct + "%";
+  document.getElementById("barfill").style.width = pct + "%";
+  document.getElementById("gapcount").textContent = (SCORED.length - done) + " of " + SCORED.length + " fields";
+}
+
+function save(){ try { localStorage.setItem(STORE, JSON.stringify(D)); } catch (e) {} }
+
+document.addEventListener("input", e => {
+  const k = e.target.dataset.k;
+  if (!k) return;
+  D[k] = e.target.value;
+  save(); refresh();
+});
+
+document.addEventListener("click", async e => {
+  const btn = e.target.closest("[data-copy]");
+  if (!btn) return;
+  const el = document.getElementById("out-" + btn.dataset.copy);
+  const text = el.dataset.raw || "";
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch (err) { ok = false; }
+  if (!ok) {
+    // Clipboard API is blocked in some sandboxes — select it so Cmd/Ctrl+C works.
+    const r = document.createRange(); r.selectNodeContents(el);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  }
+  btn.textContent = ok ? "Copied" : "Selected — press Cmd/Ctrl+C";
+  btn.classList.add("copied");
+  setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2200);
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  if (!confirm("Clear every saved field in this browser?")) return;
+  D = {}; save();
+  KEYS.forEach(k => { const el = document.getElementById(k); if (el) el.value = ""; });
+  refresh();
+});
+
+KEYS.forEach(k => { const el = document.getElementById(k); if (el && D[k]) el.value = D[k]; });
+buildCards();
+refresh();
+</script>

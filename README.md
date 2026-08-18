@@ -12,6 +12,14 @@ the campaign-specific idea.
 
 ## Quick start
 
+**Fastest path — the console.** `console/application-console.html` is a
+fill-once-paste-everywhere tool: open it beside the platform tabs you're signed
+into, fill your details once, and every application across all nine platforms
+generates itself with copy buttons. Missing fields show as highlighted gaps so
+you can't paste a hole by accident. Works offline; saves to your browser.
+
+The command-line flow below does the same thing, plus follow-up tracking.
+
 ```bash
 # 1. Read the strategy for your platforms — which ones you can actually apply to
 cat platforms/my-platforms.md
@@ -61,6 +69,8 @@ platforms/
   platform-guide.md        The wider landscape, across all four categories.
   notes/                   One file per platform, pre-filled for your list.
 rates/rate-card.md         How to price, and what to price separately.
+console/
+  application-console.html Fill once, generate all nine applications, copy-paste.
 tracker/campaigns.csv      The log.
 scripts/
   parse_bookmarks.py       Chrome bookmark folder → platform list.
