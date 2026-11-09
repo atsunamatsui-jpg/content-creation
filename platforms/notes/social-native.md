@@ -1,14 +1,24 @@
-# Social Native
+# Social Native AI
 
-- **URL:** https://www.socialnative.com
+- **URL:** https://www.socialnative.ai
 - **Category:** 2 — hybrid, UGC-weighted
 - **Priority: MEDIUM.**
 
+## Corrected from an earlier note
+
+Same company as before (formerly Olapic, previously "Social Native") — it
+rebranded around "AI," now positioning itself as a predictive platform:
+"Predict What Works Before You Spend." The domain changed to socialnative.ai.
+
 ## How creators get work
 
-Content-creation platform for brands (acquired Olapic). Creators opt in and
-receive/apply to briefs. Weighted toward UGC and content production — briefs are
-often "produce assets we'll use in our ads" rather than "post to your audience."
+Content-creation platform for brands. Creators opt in and receive/apply to
+briefs. Weighted toward UGC and content production — briefs are often
+"produce assets we'll use in our ads" rather than "post to your audience."
+The predictive-AI positioning suggests your profile and past performance data
+may now get scored for likely performance before you're matched to a brief,
+not just skimmed by a person — worth keeping your connected analytics current
+for that reason specifically.
 
 ## What it asks for
 

@@ -504,12 +504,14 @@ function qaInmar(){
   ];
 }
 
-function qaCriqle(){
+function qaCirqle(){
   return [
-    { q:"Before applying — verify what this platform is",
-      a:`Does it have a browsable campaign list, or is it invite-only? Are campaigns paid, gifted, or UGC-licensing? Does it connect analytics automatically, or do you type numbers in — and does it take a commission on deals? Check which brands are actually on it and whether they overlap with what's already on Aspire, since that determines whether this platform is worth ongoing effort or just a profile to have on file.` },
-    { q:"Minimal signup profile",
-      a:()=>`${v("name")} (${v("handle")}) — cinematic unboxing, mystery-box, and Japanese-collectible content for a kawaii-core, Y2K-leaning audience. ${v("ttFol")} TikTok · ${v("igFol")} Instagram · ${v("ytSubs")} YouTube. Los Angeles-based, trilingual (Japanese, English, Mandarin). Contact: ${v("email")}` }
+    { q:"Creator profile — what you make",
+      a:()=>`I create across two registers: cinematic unboxing and Japanese-collectible storytelling, and high-volume fast-cut comedy/mukbang content as creative director of @snackyays — one recent post reached ~40x my account's typical engagement, real proof the content performs well past my existing audience, which is the exact thing a performance-ads platform should care about. ${v("ttFol")} TikTok · ${v("igFol")} Instagram · ${v("ytSubs")} YouTube. Based in Los Angeles, trilingual (Japanese, English, Mandarin). Contact: ${v("email")}` },
+    { q:"Whitelisting & usage rights — the actual product here",
+      a:()=>`Since this platform's core business is running creator content as paid ads rather than organic posting, usage rights are the main thing to get right, not an afterthought. ${rateLine()} for a standard post with 30 days of organic usage included — whitelisting or running my content as paid media through your own ad accounts is priced separately and scales with spend level and duration, so tell me the budget and window and I'll quote accordingly. I disclose and price perpetual or all-channel usage differently from a short organic-only license, since those are materially different products worth materially different amounts.` },
+    { q:"Before applying — what's still genuinely unconfirmed",
+      a:`The Cirqle just integrated directly with Meta's Creator Marketplace (announced Nov 2025), so check there first for an existing listing rather than assuming a separate application exists on thecirqle.com. If a standalone creator signup does exist outside that integration, its specific fields aren't publicly documented — fill in what these answers cover and flag anything else rather than guessing at a form shape that might not match reality.` }
   ];
 }
 
@@ -521,9 +523,9 @@ function qaCriqle(){
    surface prompt injection uses. */
 const SITE = {
   aspire:"https://www.aspire.io", izea:"https://izea.com", impact:"https://impact.com",
-  popularpays:"https://popularpays.com", socialnative:"https://www.socialnative.com",
+  popularpays:"https://popularpays.com", socialnative:"https://www.socialnative.ai",
   fohr:"https://www.fohr.co", massivesway:"https://www.massivesway.com",
-  inmar:"https://www.inmar.com", criqle:""
+  inmar:"https://socialfabric.us", criqle:"https://thecirqle.com"
 };
 // Every task ends in DRAFT, not submitted — genOperator appends one batch
 // review step per platform so you approve a summary once, not per field.
@@ -535,8 +537,8 @@ const TASK = {
   socialnative:`Open my creator profile and complete every empty field from MY DETAILS, using the profile, rates, and usage-scope answers below. Then check for open briefs matching ${v("niche")}. As with Popular Pays, do not write a generic reply to a specific brief — surface it in the batch summary and I will answer it once I have read it.`,
   fohr:`Open my profile settings and fill every field from MY DETAILS — bio, categories, location, contact. Use the bio answer below for the bio/about field. Confirm my social accounts are connected, and note which ones are not. Do not apply to anything; this platform is discovery-only, so profile changes are the only save needed here.`,
   massivesway:`Find the creator/influencer network application form and complete it from MY DETAILS, using the profile answer below for any about-you box. If I am already a member, open my profile instead and fill in anything incomplete. Leave the network application at its review screen — do not submit yet.`,
-  inmar:`Find the creator community signup or my existing profile, and complete it from MY DETAILS using the profile answer below. Stop and ask me before entering any household, shopper, or demographic data about me personally that is not in MY DETAILS. Leave signup at its review screen — do not submit yet.`,
-  criqle:`First tell me what this platform actually is, using the verification checklist below: browsable campaign list or invite-only, paid/gifted/UGC-licensing, auto-connected analytics or manual entry, commission taken. Then create or complete my profile from MY DETAILS using the signup answer below. Do not apply to anything until you have reported back and I have confirmed how to proceed.`
+  inmar:`Go to socialfabric.us (Inmar's creator community — this is the actual signup site, not inmar.com directly) and find the Social Fabric signup or my existing profile. Complete it from MY DETAILS using the profile answer below. Stop and ask me before entering any household, shopper, or demographic data about me personally that is not in MY DETAILS. Leave signup at its review screen — do not submit yet.`,
+  criqle:`The Cirqle (thecirqle.com) turns creator content into paid ads rather than running a typical campaign board — it recently integrated directly with Meta's Creator Marketplace, so check there first for an existing listing before hunting for a separate signup flow on their own site. Complete my profile from MY DETAILS using the profile answer below, and use the whitelisting/usage-rights answer for any field about licensing content for paid media. The exact creator application mechanics aren't fully documented publicly, so if the form asks something these answers don't cover, surface it in the batch summary rather than guessing.`
 };
 
 function detailBlock(){
@@ -618,9 +620,9 @@ const PLATFORMS = [
     note:"Your <strong>portfolio does the selling</strong>, so upload your best production work rather than just your highest-view posts. Read each brief for whether you're posting or only delivering assets — different products, different rates.",
     qa:qaPopularPays, out:"Answers" },
 
-  { id:"socialnative", name:"Social Native", cat:"mid", chip:"UGC-weighted", tag:"Expect ad assets more than posting deals",
+  { id:"socialnative", name:"Social Native AI", cat:"mid", chip:"UGC-weighted", tag:"Now positioned as predictive-AI creator matching",
     asks:["Portfolio and content samples","Channels and audience data","Content-production rates"],
-    note:"Briefs here are often <strong>“produce assets we'll run in our ads”</strong> rather than “post to your audience.” Price on the UGC line unless posting is explicit, and read the usage window on every brief — perpetual all-channel usage should cost more.",
+    note:"Same company as before (formerly Olapic), rebranded around <strong>predicting which content will perform before a brand spends</strong> on it — so your profile and past performance data may get scored before you're matched to a brief, not just skimmed. Briefs are often “produce assets we'll run in our ads” rather than “post to your audience.” Price on the UGC line unless posting is explicit, and read the usage window — perpetual all-channel usage should cost more.",
     qa:qaSocialNative, out:"Answers" },
 
   { id:"fohr", name:"FOHR", cat:"hold", chip:"Discovery", tag:"Brands search — you don't apply",
@@ -633,15 +635,15 @@ const PLATFORMS = [
     note:"You apply to join the <strong>network</strong> once; after that opportunities arrive by email. Filter those into a folder you actually check — network opportunities are usually first-come, so the creators who win them reply fastest, not best.",
     qa:qaMassiveSway, out:"Answers" },
 
-  { id:"inmar", name:"Inmar Intelligence", cat:"hold", chip:"Community", tag:"Retail & CPG brands — a different pool",
+  { id:"inmar", name:"Social Fabric", cat:"hold", chip:"Community", tag:"Inmar/Collective Bias's creator community — retail & CPG",
     asks:["Channels, audience data, demographics","Household/shopper information is plausible here given the retail focus — decide what you're comfortable sharing","Content categories"],
-    note:"Grew out of acquiring Collective Bias. Campaign invites skew <strong>CPG, grocery and retail</strong>, often with in-store tie-ins — low overlap with the DTC brands on Aspire, so it costs little to be in both. Briefs are more prescriptive than usual; read requirements closely.",
+    note:"The creator-facing name for Inmar's community (built on its Collective Bias acquisition) — sign up at <strong>socialfabric.us</strong>, not inmar.com directly; that login redirects to Inmar's Creator Hub. Campaign invites skew <strong>CPG, grocery and retail</strong>, often with in-store tie-ins — low overlap with the DTC brands on Aspire, so it costs little to be in both.",
     qa:qaInmar, out:"Answers" },
 
-  { id:"criqle", name:"The Criqle", cat:"check", chip:"Verify first", tag:"Least documented — confirm what it is",
-    asks:["Is there a browsable campaign list, or is it invite-only?","Gifted, paid, or UGC licensing?","Does it connect analytics, or do you type numbers in?","Does it take a commission on deals?","Which brands are on it — and do they overlap with Aspire's?"],
-    note:"I couldn't verify this one, and I'd rather say so than invent detail you'd act on. <strong>Run the five checks above</strong> next time you're in the dashboard, then treat it like any other platform. Meanwhile the generic profile below is enough to complete signup.",
-    qa:qaCriqle, out:"Answers" }
+  { id:"criqle", name:"The Cirqle", cat:"mid", chip:"Performance ads", tag:"Amsterdam-based — turns your content into paid ads",
+    asks:["Connected social accounts","Content/portfolio samples","Whitelisting & usage-rights terms — this is the actual product here, not a simple post fee","Possibly surfaced via Meta's Creator Marketplace rather than a separate signup"],
+    note:"Previously unverified under a misspelled name — now confirmed: a real, Amsterdam-based platform whose main product is running creator content as paid ads (whitelisting), not a typical campaign board. Just integrated directly with <strong>Meta's Creator Marketplace</strong>, so check there for a listing before hunting for a separate application. The exact creator sign-up mechanics outside that integration aren't publicly documented — if the real form asks something the answers below don't cover, that's a genuine unknown, not a gap in research.",
+    qa:qaCirqle, out:"Answers" }
 ];
 
 /* ── render ─────────────────────────────────────────────── */
