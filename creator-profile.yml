@@ -16,15 +16,15 @@ creator:
 
   # One line. This is the single most reused sentence in the whole toolkit.
   # Formula: I make <content type> for <audience> who <want outcome>.
-  one_liner: "I make cinematic unboxing, mystery-box, and Japanese-collectible content (Sanrio, Pokemon, Pop Mart) for a kawaii-core, Y2K-leaning audience."
+  one_liner: "I create across two registers: cinematic unboxing and Japanese-collectible storytelling (Sanrio, Pokemon, Pop Mart), and high-volume, fast-cut comedy/mukbang content as creative director of @snackyays."  # confirmed via connected IG analytics, Nov 2026
 
   # What makes you the obvious pick over someone with similar numbers.
   # Be concrete: "bilingual JP/EN so one shoot serves two markets" beats
   # "high-quality content and great engagement".
-  differentiator: "A decade of creator experience with cinematic, story-led production; trilingual (JP/EN/Mandarin); runs my own blind-box storefront, so I bring real commerce credibility, not just reach."
+  differentiator: "A decade of creator experience spanning two production registers — cinematic, story-led content and high-volume, fast-turnaround comedy/mukbang formats as creative director of @snackyays; trilingual (JP/EN/Mandarin); one recent post reached ~40x my account's typical engagement, real proof the comedy format converts beyond my existing audience."
 
-  niche: "Lifestyle, beauty, fashion, fitness, health, unboxing, mystery boxes, Japanese collectibles"                     # e.g. "Home cooking / Japanese food"
-  content_style: "Cinematic, story-led, slice-of-life pacing rather than fast-cut hype"             # e.g. "Fast-cut, voiceover-led, natural light"
+  niche: "Lifestyle, beauty, fashion, unboxing, mystery boxes, Japanese collectibles; also comedy/mukbang/snack content via @snackyays"
+  content_style: "Two registers depending on the brief: cinematic/story-led for collectible and lifestyle content, fast-cut/comedic for snack and food content — match the register to the brand, don't default to one"
 
 # ─── Channels ────────────────────────────────────────────────────────────────
 # Delete channels you do not have. Keep numbers current — inflated numbers get
@@ -32,9 +32,9 @@ creator:
 channels:
   instagram:
     url: https://instagram.com/atsunamatsui
-    followers: "363K"                # public count, Aug 2026 — confirm current before submitting
-    avg_reel_views: FILL_ME          # native analytics only, not public
-    engagement_rate: FILL_ME         # native analytics only, not public
+    followers: "357K"                # live via connected IG analytics, Nov 2026 — accurate as of this pull
+    avg_reel_views: "~1K"            # 30-day median reel reach 525 / views 646 — most reels are small, occasional spikes carry the account; see top_content
+    engagement_rate: "~0.05% median, up to ~2% on breakout posts"   # real spread, not a single flat number — be upfront about this shape in negotiations
   tiktok:
     url: https://tiktok.com/@atsunamatsui
     followers: "856.5K"              # public count, Aug 2026 — confirm current before submitting
@@ -49,20 +49,24 @@ channels:
 # ─── Audience ────────────────────────────────────────────────────────────────
 # Pull these from native analytics. Brands care more about this than raw reach.
 audience:
-  top_countries: FILL_ME             # native analytics only — pull from IG/TikTok/YT dashboards
-  age_range: FILL_ME
-  gender_split: FILL_ME
-  notable: "Trilingual JP/EN/Mandarin audience reach; strong overlap with Japanese-collectible and kawaii-culture buyers"
+  # Pulled live from connected Instagram analytics, Nov 2026. TikTok/YouTube
+  # audience data is not connected here — ask for it the same way if you add
+  # those platforms' native analytics access.
+  top_countries: "US 29.4%, Mexico 10.3%, India 8%, Morocco 5.2%, Colombia 5.2% (IG followers)"
+  age_range: "25-34 (50.3%), 18-24 (20.5%), 35-44 (18.9%) (IG followers)"
+  gender_split: "F 60.4% / M 17.7% / undisclosed 21.9% (IG followers)"
+  notable: "Engaged audience skews younger and more male than the follower base (18-24 is 20.5% of followers but 40.6% of who actually engages) — worth knowing when a brand asks who you reach vs. who's active. Trilingual JP/EN/Mandarin."
 
 # ─── Proof ───────────────────────────────────────────────────────────────────
 # Three best-performing posts. Lead with the one closest to the brand's category.
-# Pick your 3 best-performing posts yourself — I can't see which of your posts
-# outperformed, only that your accounts exist. This is the one section that
-# has to come from you; everything else in this file is filled in.
+# Pulled live from connected Instagram analytics, Nov 2026 — real numbers,
+# not estimated. Only one slot filled: this is the one genuine breakout in
+# the last 30 days. Add two more yourself if you have other strong posts
+# (TikTok/YouTube especially — those platforms aren't connected here).
 top_content:
-  - url: FILL_ME
-    result: FILL_ME                  # "412K views, 8.1% ER, 340 saves"
-    why: FILL_ME
+  - url: https://www.instagram.com/reel/DfM5ZTjAUSn/
+    result: "71.4K views, 48.9K reach, 727 likes, 100 saves, 53 shares — ~40x this account's typical reel engagement rate"
+    why: "A single clear visual gimmick (only red foods, one sitting) with a built-in participation hook — simple enough to travel past my existing followers, which is most of why it reached 93x the usual audience."
   - url: FILL_ME
     result: FILL_ME
     why: FILL_ME

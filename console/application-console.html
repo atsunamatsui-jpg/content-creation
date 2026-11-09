@@ -345,17 +345,24 @@ const KEYS = ["name","handle","email","location","languages","niche","oneLiner",
 const SCORED = KEYS.filter(k => !["brand","campaign","hook","angle","deliverables"].includes(k));
 const STORE = "campaign-console-v1";
 
-// Pre-filled from what you already told me + public search. Anything I could
-// not verify publicly (avg views, engagement rate, audience demographics,
-// your best post) is left blank on purpose rather than guessed — those only
-// exist in your native analytics dashboards.
+// IG fields below are pulled live from your connected Instagram account
+// (Buzzfy), Nov 2026 — real, not estimated. TikTok/YouTube are still the
+// publicly-verified figures from before; connect those natively too and
+// I'll do the same pull for them. Your content turned out to split into two
+// real registers — cinematic/collectible AND high-volume comedy/mukbang as
+// creative director of @snackyays — so niche/oneLiner/diff below name both;
+// lean on whichever one fits the specific brand you're answering.
 const DEFAULTS = {
   name:"Atsuna Matsui", handle:"@atsunamatsui", email:"contact@atsunamatsui.com",
   location:"Los Angeles, CA", languages:"Japanese, English, Mandarin",
-  niche:"Lifestyle, beauty, fashion, fitness, health, unboxing, mystery boxes, Japanese collectibles",
-  oneLiner:"I make cinematic unboxing, mystery-box, and Japanese-collectible content (Sanrio, Pokemon, Pop Mart) for a kawaii-core, Y2K-leaning audience.",
-  diff:"A decade of creator experience with cinematic, story-led production; trilingual (JP/EN/Mandarin); I run my own blind-box storefront, so I bring real commerce credibility, not just reach.",
-  igUrl:"instagram.com/atsunamatsui", igFol:"363K",
+  niche:"Lifestyle, beauty, fashion, unboxing, mystery boxes, Japanese collectibles; also comedy/mukbang/snack content via @snackyays",
+  oneLiner:"I create across two registers: cinematic unboxing and Japanese-collectible storytelling (Sanrio, Pokemon, Pop Mart), and high-volume, fast-cut comedy/mukbang content as creative director of @snackyays.",
+  diff:"A decade of creator experience across two production registers — cinematic/story-led and high-volume fast-turnaround comedy — trilingual (JP/EN/Mandarin); one recent post reached ~40x my account's typical engagement, real proof the comedy format travels past my existing audience.",
+  igUrl:"instagram.com/atsunamatsui", igFol:"357K",
+  igViews:"~1K median, up to 70K+ on a breakout", igEr:"~0.05% median, up to ~2% on breakout posts",
+  geo:"US 29.4%, Mexico 10.3%, India 8% (IG followers)", age:"25-34 (50.3%), 18-24 (20.5%) (IG followers)", gender:"F 60.4% / M 17.7% (IG followers)",
+  topUrl:"instagram.com/reel/DfM5ZTjAUSn", topResult:"71.4K views, 48.9K reach, 727 likes, 100 saves — ~40x this account's typical reel engagement",
+  topWhy:"A single clear visual gimmick (only red foods, one sitting) with a built-in participation hook — simple enough to travel past my existing followers.",
   ttUrl:"tiktok.com/@atsunamatsui", ttFol:"856.5K",
   ytUrl:"youtube.com/atsunamatsui", ytSubs:"5M",
   currency:"USD", rTt:"4,000", rReel:"3,500", rStory:"1,200", rYt:"9,000", rUgc:"2,500"
@@ -363,6 +370,12 @@ const DEFAULTS = {
 // One caveat on the YouTube figure: public third-party trackers have shown
 // numbers as low as ~3M against the 5M you gave me. Confirm your current
 // count before applying anywhere that connects analytics directly.
+// A second caveat, now backed by real data rather than a guess: your typical
+// Instagram reel badly underperforms your follower count (median reel reach
+// is ~525 against 357K followers) — most posts don't take off, and the ones
+// that do (mukbang, prank format) spike hard. Lead pitches with the real
+// breakout post above, not a flat "357K followers" framing a brand could
+// contradict by pulling your own connected analytics.
 
 let D = {};
 try {
@@ -409,12 +422,12 @@ const rateLine = () => `${v("currency")} ${v("rTt")} per TikTok · ${v("currency
 function qaAspire(){
   return [
     { q:"How would you describe your style of content?",
-      a:`My content is cinematic and paced like a mini-story rather than fast-cut hype — I build toward a reveal instead of rushing to it. A typical unboxing has slow pans, deliberate sound design, and a real beat of anticipation before the box opens, closer to ASMR-adjacent comfort content than a standard haul video. That pacing comes from a decade of shooting and editing everything myself, so I know how to hold a shot long enough for a product to actually register. It also means the content holds up on a rewatch, which matters in a niche built on collecting and repeat engagement.` },
+      a:`I work in two registers and match the one to the brief rather than defaulting to one. For collectible and lifestyle products, it's cinematic and paced like a mini-story — slow pans, real sound design, a beat of anticipation before a reveal. For food and snack content, it's fast-cut and comedic — I'm creative director of @snackyays, where a recent post pulled 71K views and ~40x my account's typical engagement by leaning into a simple, shareable hook rather than production polish. A decade of shooting and editing everything myself is what makes both registers possible from the same person. [Pick whichever register actually fits this brand's category, don't default to the cinematic one if the product is food/snack.]` },
     { q:"What is your favorite [Brand] product and why?",
       a:`[Name the real product from this listing.] [One true, specific detail about how you use it or what drew you to it — a texture, a color story, a piece from a collection you already own.] [Why it fits the kawaii/Y2K aesthetic your audience follows you for, not a generic compliment.] [One line connecting it to what that audience already collects — Sanrio, Pop Mart, Pokémon — so the fit reads as real rather than assigned.]`,
       hint:"Only answer this if it's genuinely true. If you haven't used the product, say so plainly and pivot to what specifically draws you to trying it — a generic answer here reads as templated to anyone reviewing volume." },
     { q:"Why do you want to work with [Brand]?",
-      a:`[Brand]'s [specific product category] sits directly in the collectible and kawaii space my audience already spends in — the same audience following Sanrio drops, Pop Mart releases, and Pokémon collabs. I'd shoot this the way I shoot my own personal unboxings: as a genuine reveal, not a sponsored read, because that's the format this audience trusts and shares. [Name a concrete format idea for their actual brief — a themed unboxing series, a first-impressions cinematic short.] Trilingual reach also means this content travels into Japanese- and Mandarin-speaking audiences that a lot of English-only creators in this niche can't.` },
+      a:`[If this is a collectible/lifestyle brand:] [Brand]'s [specific product category] sits directly in the collectible and kawaii space my audience already spends in. I'd shoot this as a genuine reveal, not a sponsored read — [name a concrete format idea for their actual brief]. [If this is a food/snack/CPG brand instead:] [Brand] fits the comedy/mukbang format I run as creative director of @snackyays, where a recent post reached ~40x my typical engagement — [name a concrete format idea: a taste-test, a prank format, a mukbang]. Either way, trilingual reach (JP/EN/Mandarin) means this content travels further than most English-only creators in either category.` },
     { q:"Deliverables & rate",
       a:()=>`${v("deliverables")} at ${v("currency")} ${v("rTt")} for a dedicated TikTok, or ${v("currency")} ${v("rReel")} for an IG Reel — reflecting a decade of cinematic production and current reach (${v("ttFol")} TikTok, ${v("igFol")} Instagram, ${v("ytSubs")} YouTube). Open to adjusting the mix to this campaign's specific brief and budget, and can quote a bundled rate for multiple deliverables. Turnaround is within 7 days of product arrival with one round of revisions, and the quoted rate includes 30 days of organic usage on your channels — paid amplification or extended usage is priced separately.` }
   ];
@@ -423,9 +436,9 @@ function qaAspire(){
 function qaIzea(){
   return [
     { q:"Your pitch (text, or record video/webcam instead)",
-      a:`[Describe the specific concept for this casting call's brief.] I'd shoot it the way I shoot my own collection content — a genuine reveal with cinematic pacing, not a fast, templated read. My audience is exactly the kawaii and collectibles crowd this fits, spanning TikTok, Instagram, and YouTube with reach into Japanese-, English-, and Mandarin-speaking viewers. If production quality matters more than volume for this opportunity, that's the entire premise of my channel — a decade of self-shot, story-led content rather than fast-turnaround templated posts.` },
+      a:`[Describe the specific concept for this casting call's brief — match the register to the category: cinematic/reveal pacing for a collectible or lifestyle product, fast-cut comedy/mukbang for food or snack, which is the format I run as creative director of @snackyays and which recently hit ~40x my typical engagement.] My reach spans TikTok, Instagram, and YouTube with audiences in Japanese-, English-, and Mandarin-speaking markets. A decade of self-shot production means I can deliver either register at the quality level this opportunity needs, not a one-size pitch.` },
     { q:"Your price (separate field, set after the pitch)",
-      a:()=>`${v("currency")} ${v("rTt")} for a single dedicated TikTok, or ${v("currency")} ${v("rReel")} for an Instagram Reel — priced to this casting call's specific deliverable rather than a vague range, since IZEA lets you set price per opportunity. This reflects current reach (${v("ttFol")} TikTok, ${v("igFol")} Instagram, ${v("ytSubs")} YouTube) and a decade of cinematic production experience, not a generic per-follower formula. If the opportunity bundles multiple deliverables, quote the bundle rather than stacking line items.` }
+      a:()=>`${v("currency")} ${v("rTt")} for a single dedicated TikTok, or ${v("currency")} ${v("rReel")} for an Instagram Reel — priced to this casting call's specific deliverable rather than a vague range, since IZEA lets you set price per opportunity. This reflects current reach (${v("ttFol")} TikTok, ${v("igFol")} Instagram, ${v("ytSubs")} YouTube) and a decade of production experience across both a cinematic and a fast-cut comedy register, not a generic per-follower formula. If the opportunity bundles multiple deliverables, quote the bundle rather than stacking line items.` }
   ];
 }
 
@@ -443,7 +456,7 @@ function qaImpact(){
 function qaUgcProfile(){       // shared stable fields for Popular Pays & Social Native
   return [
     { q:"Creator profile — production notes",
-      a:`I shoot, direct, and edit everything myself, so a brand working with me gets finished, channel-ready assets rather than raw footage to post-produce. My pacing is cinematic and story-led — slow reveals, real sound design — which sets the content apart from fast-cut UGC in the same categories. A decade of doing this means I can deliver a polished channel post and an ad-ready cutdown from the same shoot, in vertical or square, without a second production pass. I also run my own blind-box storefront, so I understand product photography and unboxing pacing from the commerce side as well as the content side.` },
+      a:`I shoot, direct, and edit everything myself across two registers: cinematic and story-led for collectible/lifestyle products, and fast-cut comedic/mukbang for food and snack — I'm creative director of @snackyays, where that format recently pulled ~40x my account's typical engagement. A decade of doing both means a brand gets finished, channel-ready assets in whichever register fits the product, not a single house style applied regardless of category. I can deliver a polished channel post and an ad-ready cutdown from the same shoot, in vertical or square, without a second production pass.` },
     { q:"Rates",
       a:()=>`${rateLine()}. Content licensed for your paid channels is priced separately from content I post to my own audience — tell me the specific usage window and channels and I'll quote accordingly, since perpetual or all-channel usage is a materially different product than a 30-day organic license.` }
   ];
@@ -472,21 +485,21 @@ function qaSocialNative(){
 function qaFohr(){
   return [
     { q:"Profile bio / about field",
-      a:()=>`I make cinematic unboxing, mystery-box, and Japanese-collectible content — Sanrio, Pokemon, Pop Mart — for a kawaii-core, Y2K-leaning audience, with verified reach across TikTok (${v("ttFol")}), Instagram (${v("igFol")}), and YouTube (${v("ytSubs")}). A decade of self-shot, story-led production is behind every piece of content, not templated turnaround. I'm trilingual (Japanese, English, Mandarin), which extends genuine audience reach beyond English-only creators in this category. Connect all three accounts here specifically — Fohr weighs verified audience quality over raw follower count, so the analytics link is doing more work than the bio text.` }
+      a:()=>`I create across two registers: cinematic unboxing and Japanese-collectible storytelling (Sanrio, Pokemon, Pop Mart), and high-volume fast-cut comedy/mukbang content as creative director of @snackyays — one recent post reached 71K views at ~40x my account's typical engagement. Verified reach across TikTok (${v("ttFol")}), Instagram (${v("igFol")}, audience skewing 25-34 and US-based), and YouTube (${v("ytSubs")}). Trilingual (Japanese, English, Mandarin) extends genuine audience reach beyond English-only creators in either category. Connect all three accounts here specifically — Fohr weighs verified audience quality over raw follower count, so the analytics link is doing more work than the bio text.` }
   ];
 }
 
 function qaMassiveSway(){
   return [
     { q:"Network application / about-you field",
-      a:()=>`I make cinematic unboxing, mystery-box, and Japanese-collectible content for a kawaii-core, Y2K-leaning audience, with ${v("ttFol")} on TikTok, ${v("igFol")} on Instagram, and ${v("ytSubs")} on YouTube. Based in Los Angeles and available for fast-turnaround opportunities — a decade of production experience means I can move quickly without the content looking rushed. Trilingual (Japanese, English, Mandarin) for any brief needing JP or Mandarin-market reach specifically. Since network opportunities here move by email and tend to go to whoever replies first, this profile is set up so I can say yes fast once something lands.` }
+      a:()=>`I create across two registers — cinematic unboxing/collectible storytelling and high-volume fast-cut comedy/mukbang as creative director of @snackyays — with ${v("ttFol")} on TikTok, ${v("igFol")} on Instagram, and ${v("ytSubs")} on YouTube. Based in Los Angeles, and genuinely fast-turnaround: the comedy side of my work posts multiple times a day on a regular schedule, so "fast" here is a demonstrated cadence, not a claim. Trilingual (Japanese, English, Mandarin) for any brief needing JP or Mandarin-market reach. Since network opportunities here move by email and go to whoever replies first, this profile is set up so I can say yes fast once something lands.` }
   ];
 }
 
 function qaInmar(){
   return [
     { q:"Community profile",
-      a:()=>`I make lifestyle, beauty, unboxing, and Japanese-collectible content with ${v("ttFol")} on TikTok, ${v("igFol")} on Instagram, and ${v("ytSubs")} on YouTube subscribers, based in Los Angeles. Beyond content, I run my own blind-box storefront (atsunamatsui.com), so I bring real shopper and purchase-intent experience, not just reach — relevant given this platform's retail and CPG brand pool. A decade of cinematic, story-led production means in-store or shopper-marketing tie-ins get shot with the same pacing as my regular content, not treated as a lesser production. Trilingual (Japanese, English, Mandarin) for any retail brief targeting Japanese-market shoppers specifically.`,
+      a:()=>`I'm creative director of @snackyays, where I make high-volume comedy and mukbang content built around snack and grocery products — Hot Cheetos, Takis — which is a direct fit for this platform's retail/CPG brand pool, not an adjacent angle. One recent post reached 71K views at ~40x my account's typical engagement. I also make cinematic unboxing and Japanese-collectible content under my own name, with ${v("ttFol")} on TikTok, ${v("igFol")} on Instagram, and ${v("ytSubs")} on YouTube, based in Los Angeles. Trilingual (Japanese, English, Mandarin) for any retail brief targeting Japanese-market shoppers specifically.`,
       hint:"If the signup asks for household or shopper demographic data beyond your public profile, decide deliberately what you're comfortable sharing rather than filling it in by default." }
   ];
 }
